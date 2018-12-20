@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
-const {getUser} = require('../services/users');
+const {getUser, createUser} = require('../services/users');
 const { addCachedUser } = require('../services/redis');
 
 /* GET home page. */
@@ -16,7 +16,15 @@ router.get('/:username', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  createUser(req.body)
+  .then(response=>{
+      res.status(301).json({ user:response });
+  })
+  .catch(err=>{
+    console.log(err);
+    res.status(400).json(err);
+  });
+ 
 });
 
 module.exports = router;
