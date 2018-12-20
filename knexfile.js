@@ -1,11 +1,9 @@
-let connection = {
-  url: process.env.DATABASE_URL
-}
+
   
   module.exports = {
     development: {
         client: 'pg',
-        connection: connection,
+        connection: process.env.DATABASE_URL,
         migrations: {
             directory: __dirname + '/db/migrations',
           },
