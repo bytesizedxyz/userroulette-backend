@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
 const cors = require('cors');
 const logger = require('morgan');
-const redis = require("redis");
-
+require("dotenv").config();
 
 
 const knex = require('./db/knex');
@@ -25,8 +24,4 @@ app.listen(port, function() {
 })
 
 
-const client = redis.createClient({
-  port: process.env.REDIS_PORT,
-  password: process.env.REDIS_PASSWORD,
-  host: process.env.REDIS_HOST
-});
+
