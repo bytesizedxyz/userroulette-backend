@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../db/knex');
-const {getUser} = require('../services/users')
+const {getUser} = require('../services/users');
+
+const client = redis.createClient({
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+  host: process.env.REDIS_HOST
+});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {

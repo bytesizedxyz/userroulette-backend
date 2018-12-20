@@ -4,14 +4,14 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 8000;
 const cors = require('cors');
 const logger = require('morgan');
-const knex = require('./db/knex');
+const redis = require("redis");
 
+
+
+const knex = require('./db/knex');
 const user = require('./routes/user');
 
 const app = express();
-
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(cors());
@@ -23,3 +23,10 @@ app.use('/user', user);
 app.listen(port, function() {
   console.log("listening on port: ", port);
 })
+
+
+const client = redis.createClient({
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+  host: process.env.REDIS_HOST
+});
