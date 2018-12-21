@@ -10,7 +10,7 @@ router.get("/featured", function(req, res, next) {
   });
 });
 
-router.get("/randUser", function(req, res, next) {
+router.get("/random", function(req, res, next) {
   getRandUser()
     .then(response => {
       res.json({ user: response });
