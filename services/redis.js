@@ -20,7 +20,7 @@ function getCachedUser() {
         console.log(err);
         rej(err);
       }
-      if (data === null) {
+      if (!!data) {
         res(generateCachedUser());
       } else {
         console.log("Got cached user: ", data);
