@@ -10,6 +10,17 @@ router.get("/featured", function(req, res, next) {
   });
 });
 
+router.get("/randUser", function(req, res, next) {
+  getRandUser()
+    .then(response => {
+      res.json({ user: response });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+    });
+});
+
 router.get('/:username', function(req, res, next) {
   getUser(req.params.username)
   .then(response=>{

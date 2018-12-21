@@ -27,7 +27,32 @@ const getUser = (username) => {
     })
   })
 }
+
+const getRandUser = () => {
+  return new Promise((res, rej) => {
+    knex("Users")
+      .count("username")
+      .then(data => {
+        return (maxLength = Math.floor(Math.random() * (+data[0].count - +1)) + +1);
+      })
+      .then(length => {
+        knex("Users")
+          .select("username", "first_name", "last_name", "link", "bio", "email")
+          .where({ id: length })
+          .then(data => res(data))
+          .catch(err => {
+            console.log(err);
+            throw err;
+          });
+      })
+      .catch(err => {
+        console.log(err);
+        rej(err);
+      });
+  });
+};
 module.exports = {
   getUser,
+  getRandUser,
   createUser
 }
