@@ -1,34 +1,35 @@
-const knex = require('../db/knex');
+const knex = require("../db/knex");
 
-const createUser = ({username, first_name, last_name, email, bio, link}) => {
+const createUser = ({ username, first_name, last_name, email, bio, link }) => {
   return new Promise((res, rej) => {
     knex("Users")
-    .insert({username, first_name, last_name, email, bio, link})
-    .returning("*")
-    .then(data => {
-      res(data);
-    })
-    .catch(err => {
-      console.log(err)
-      rej(err)})
-  })
-}
+      .insert({ username, first_name, last_name, email, bio, link })
+      .returning("*")
+      .then(data => {
+        res(data);
+      })
+      .catch(err => {
+        console.log(err);
+        rej(err);
+      });
+  });
+};
 
-const getUser = (username) => {
+const getUser = username => {
   return new Promise((res, rej) => {
     knex("Users")
-    .select("username", "first_name", "last_name", "link", "bio", "email")
-    .where("username", username)
-    .then(data => {
-      res(data)
-    })
-    .catch(err => {
-      rej(err)
-    })
-  })
-}
+      .select("username", "first_name", "last_name", "link", "bio", "email")
+      .where("username", username)
+      .then(data => {
+        res(data);
+      })
+      .catch(err => {
+        rej(err);
+      });
+  });
+};
 
-async function getRandUser () {
+async function getRandUser() {
   let data = await knex("Users")
     .count("*")
     .catch(err => {
@@ -40,6 +41,8 @@ async function getRandUser () {
     .select()
     .where("id", newUserId)
     .catch(err => console.log("error in generate cached user:", err));
+
+  console.log("got random user: ", user);
   return user;
 }
 
@@ -47,4 +50,4 @@ module.exports = {
   getUser,
   getRandUser,
   createUser
-}
+};
