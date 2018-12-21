@@ -35,8 +35,8 @@ async function getRandUser() {
     .catch(err => {
       console.log(err);
     });
-
-  const newUserId = Math.floor(Math.random() * data.length) + 1;
+  const length = data[0].count;
+  const newUserId = Math.floor(Math.random() * length) + 1;
   const user = await knex("Users")
     .select()
     .where("id", newUserId)
