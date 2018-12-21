@@ -10,8 +10,15 @@ router.get("/featured", function(req, res, next) {
   });
 });
 
-router.get("/:username", function(req, res, next) {
-  res.render("index", { title: "Express" });
+router.get('/:username', function(req, res, next) {
+  getUser(req.params.username)
+  .then(response=>{
+    res.json({ user:response });
+  })
+  .catch(err=>{
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 router.post("/", function(req, res, next) {
