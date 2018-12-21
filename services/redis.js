@@ -4,6 +4,7 @@ const knex = require("../db/knex");
 
 const addCachedUser = async user => {
   user = JSON.stringify(user);
+  console.log("About to cache user: ", user);
   const cachedUser = client.set("featured", user, "EX", 60 * 60, (err, ok) => {
     if (err) {
       console.log(err);
@@ -22,6 +23,7 @@ function getCachedUser() {
       if (data === null) {
         res(generateCachedUser());
       } else {
+        console.log("Got cached user: ", data);
         res(JSON.parse(data));
       }
     });
@@ -30,6 +32,7 @@ function getCachedUser() {
 
 async function generateCachedUser() {
   const user = getRandUser();
+  console.log("Got random user: ", user);
   addCachedUser(user);
   return user;
 }
