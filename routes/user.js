@@ -18,7 +18,7 @@ router.get('/:username', function(req, res, next) {
 router.post('/', function(req, res, next) {
   createUser(req.body)
   .then(response=>{
-      res.status(301).json({ user:response });
+      res.status(201).json({ user:response });
   })
   .catch(err=>{
     console.log(err);
