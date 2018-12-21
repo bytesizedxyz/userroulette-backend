@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const knex = require("../db/knex");
-const { createUser, getUser } = require("../services/users");
+const { createUser, getUser, getRandUser } = require("../services/users");
 const { getCachedUser } = require("../services/redis");
 
 router.get("/featured", function(req, res, next) {

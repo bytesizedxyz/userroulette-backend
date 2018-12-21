@@ -28,29 +28,21 @@ const getUser = (username) => {
   })
 }
 
-const getRandUser = () => {
-  return new Promise((res, rej) => {
-    knex("Users")
-      .count("username")
-      .then(data => {
-        return (maxLength = Math.floor(Math.random() * (+data[0].count - +1)) + +1);
-      })
-      .then(length => {
-        knex("Users")
-          .select("username", "first_name", "last_name", "link", "bio", "email")
-          .where({ id: length })
-          .then(data => res(data))
-          .catch(err => {
-            console.log(err);
-            throw err;
-          });
-      })
-      .catch(err => {
-        console.log(err);
-        rej(err);
-      });
-  });
-};
+async function getRandUser () {
+  let data = await knex("Users")
+    .count("*")
+    .catch(err => {
+      console.log(err);
+    });
+
+  const newUserId = Math.floor(Math.random() * data.length) + 1;
+  const user = await knex("Users")
+    .select()
+    .where("id", newUserId)
+    .catch(err => console.log("error in generate cached user:", err));
+  return user;
+}
+
 module.exports = {
   getUser,
   getRandUser,
