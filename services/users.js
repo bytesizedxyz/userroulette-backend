@@ -1,7 +1,4 @@
 const knex = require('../db/knex');
-const getUser = () => {
-
-}
 
 const createUser = ({username, first_name, last_name, email, bio, link}) => {
   return new Promise((res, rej) => {
