@@ -1,4 +1,5 @@
 const client = require("../config/redis");
+const { getRandUser } = require("./users");
 const knex = require("../db/knex");
 
 const addCachedUser = async user => {
@@ -28,17 +29,7 @@ function getCachedUser() {
 }
 
 async function generateCachedUser() {
-  let data = await knex("Users")
-    .count("*")
-    .catch(err => {
-      console.log(err);
-    });
-
-  const newUserId = Math.floor(Math.random() * data.length) + 1;
-  const user = await knex("Users")
-    .select()
-    .where("id", newUserId)
-    .catch(err => console.log("error in generate cached user:", err));
+  const user = getRandUser();
   addCachedUser(user);
   return user;
 }
