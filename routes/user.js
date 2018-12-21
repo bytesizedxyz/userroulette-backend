@@ -14,8 +14,15 @@ router.get("/:username", function(req, res, next) {
   res.render("index", { title: "Express" });
 });
 
-router.post("/", function(req, res, next) {
-  res.render("index", { title: "Express" });
+router.post('/', function(req, res, next) {
+  createUser(req.body)
+  .then(response=>{
+      res.status(201).json({ user:response });
+  })
+  .catch(err=>{
+    console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 module.exports = router;
