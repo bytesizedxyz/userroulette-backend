@@ -4,7 +4,7 @@ const knex = require("../db/knex");
 const { createUser, getUser, getRandUser } = require("../services/users");
 const { getCachedUser } = require("../services/redis");
 
-router.get('/all', (req, res, next) => {
+router.get('/', (req, res, next) => {
   return knex('Users').then(response => {
     res.json(response);
   });
